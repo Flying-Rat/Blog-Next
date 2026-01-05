@@ -18,6 +18,31 @@ export async function HomePageContent({ posts }: HomePageContentProps) {
       <section className="relative overflow-hidden border-b border-[var(--color-border)]/40 glass-card">
         <div className="absolute inset-0 pointer-events-none">
           <div className="hero-aurora" />
+          <div className="hero-matrix" />
+          <svg
+            className="hero-schematic"
+            viewBox="0 0 900 420"
+            role="presentation"
+            aria-hidden="true"
+          >
+            <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M60 70h260l40 40h220" />
+              <path d="M120 300h200l40-40h260l40 40h180" />
+              <path d="M620 110h200l40 40" />
+              <path d="M220 190h140l40 40h140" />
+              <path d="M260 360h180l40-40h220" />
+              <circle cx="60" cy="70" r="8" />
+              <circle cx="120" cy="300" r="8" />
+              <circle cx="620" cy="110" r="8" />
+              <circle cx="220" cy="190" r="6" />
+              <circle cx="260" cy="360" r="6" />
+              <rect x="574" y="104" width="12" height="12" rx="2" />
+              <rect x="834" y="294" width="12" height="12" rx="2" />
+              <rect x="854" y="144" width="12" height="12" rx="2" />
+              <rect x="534" y="224" width="12" height="12" rx="2" />
+              <rect x="694" y="314" width="12" height="12" rx="2" />
+            </g>
+          </svg>
           <div className="hero-grid" />
         </div>
         <div className="container mx-auto px-6 py-16 md:py-24">
@@ -46,14 +71,14 @@ export async function HomePageContent({ posts }: HomePageContentProps) {
                 <div className="reduce-motion-gradient absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                 <div className="relative">
-                  <div className="flex items-center gap-3 mb-6">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-[var(--color-accent)] text-white uppercase tracking-wide">
+                  <div className="flex flex-wrap items-center gap-2 mb-6">
+                    <span className="px-2.5 py-1 text-[10px] font-semibold rounded-full bg-[var(--color-accent)] text-white uppercase tracking-[0.18em] sm:px-3 sm:py-1 sm:text-xs sm:tracking-wide">
                       {t("home.latest")}
                     </span>
-                    {featuredPost.categories?.map((category) => (
+                    {featuredPost.categories?.slice(0, 2).map((category) => (
                       <span
                         key={category}
-                        className="px-3 py-1 text-xs font-medium rounded-full glass-subtle border border-[var(--color-border)]/30 text-[var(--color-text-muted)]"
+                        className="px-2.5 py-1 text-[10px] font-medium rounded-full glass-subtle border border-[var(--color-border)]/30 text-[var(--color-text-muted)] sm:px-3 sm:py-1 sm:text-xs"
                       >
                         {category}
                       </span>
@@ -69,17 +94,17 @@ export async function HomePageContent({ posts }: HomePageContentProps) {
                   </p>
 
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4 text-sm text-[var(--color-text-muted)]">
+                    <div className="flex flex-wrap items-center gap-2 text-[11px] text-[var(--color-text-muted)] sm:text-xs md:text-sm">
                       <time dateTime={featuredPost.date}>{formatDate(featuredPost.date)}</time>
                       <span className="w-1 h-1 rounded-full bg-[var(--color-text-subtle)]" />
                       <span>
                         {featuredPost.readingTime} {t("home.minRead")}
                       </span>
                       {getAuthors(featuredPost).length > 0 && (
-                        <>
+                        <span className="hidden sm:inline-flex items-center gap-2">
                           <span className="w-1 h-1 rounded-full bg-[var(--color-text-subtle)]" />
                           <span>{getAuthors(featuredPost).join(", ")}</span>
-                        </>
+                        </span>
                       )}
                     </div>
 

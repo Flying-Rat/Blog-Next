@@ -47,29 +47,28 @@ export function HomePostFilter({
           <h2 className="text-2xl font-bold">{title}</h2>
           <div className="flex-1 h-px bg-gradient-to-r from-[var(--color-border)] to-transparent" />
         </div>
-        <fieldset
-          className="inline-flex w-full items-center gap-2 rounded-full border border-[var(--color-border)]/40 bg-[var(--color-surface-light)]/60 p-1 glass-subtle overflow-x-auto no-scrollbar sm:w-auto sm:flex-wrap"
-          aria-label={title}
-        >
+        <fieldset aria-label={title} className="min-w-0">
           <legend className="sr-only">{title}</legend>
-          {segments.map((segment) => {
-            const isActive = segment === activeCategory;
-            return (
-              <button
-                key={segment}
-                type="button"
-                onClick={() => setActiveCategory(segment)}
-                className={`whitespace-nowrap px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] rounded-full transition-all duration-300 sm:px-4 sm:py-2 sm:text-xs ${
-                  isActive
-                    ? "bg-[var(--color-accent)] text-white shadow-lg shadow-[var(--color-accent)]/30"
-                    : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface)]"
-                }`}
-                aria-pressed={isActive}
-              >
-                {segment}
-              </button>
-            );
-          })}
+          <div className="inline-flex w-full items-center gap-2 rounded-full border border-[var(--color-border)]/40 bg-[var(--color-surface-light)]/60 p-1 glass-subtle overflow-x-auto no-scrollbar sm:w-auto sm:flex-wrap max-w-full">
+            {segments.map((segment) => {
+              const isActive = segment === activeCategory;
+              return (
+                <button
+                  key={segment}
+                  type="button"
+                  onClick={() => setActiveCategory(segment)}
+                  className={`whitespace-nowrap px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] rounded-full transition-all duration-300 sm:px-4 sm:py-2 sm:text-xs ${
+                    isActive
+                      ? "bg-[var(--color-accent)] text-white shadow-lg shadow-[var(--color-accent)]/30"
+                      : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface)]"
+                  }`}
+                  aria-pressed={isActive}
+                >
+                  {segment}
+                </button>
+              );
+            })}
+          </div>
         </fieldset>
       </div>
 
@@ -103,17 +102,17 @@ export function HomePostFilter({
                     {post.excerpt}
                   </p>
 
-                  <div className="flex items-center gap-3 text-xs text-[var(--color-text-subtle)]">
+                  <div className="flex flex-wrap items-center gap-2 text-[11px] text-[var(--color-text-subtle)] sm:text-xs">
                     <time dateTime={post.date}>{formatDate(post.date)}</time>
                     <span className="w-1 h-1 rounded-full bg-[var(--color-text-subtle)]" />
                     <span>
                       {post.readingTime} {minReadLabel}
                     </span>
                     {authors.length > 0 && (
-                      <>
+                      <span className="hidden sm:inline-flex items-center gap-2">
                         <span className="w-1 h-1 rounded-full bg-[var(--color-text-subtle)]" />
                         <span>{authors.join(", ")}</span>
-                      </>
+                      </span>
                     )}
                   </div>
                 </div>

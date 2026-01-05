@@ -25,7 +25,7 @@ export function LanguageToggle({ currentLabel, nextLanguage, ariaLabel }: Langua
     <button
       type="button"
       onClick={handleToggle}
-      className="relative px-3 py-1.5 rounded-lg text-sm font-semibold transition-all duration-300 glass-subtle text-[var(--color-accent)] border border-[var(--color-accent)]/20 hover:border-[var(--color-accent)]/40 hover:shadow-sm hover:shadow-[var(--color-accent)]/10"
+      className="relative px-2 py-1 text-xs font-semibold rounded-lg transition-all duration-300 glass-subtle text-[var(--color-accent)] border border-[var(--color-accent)]/20 hover:border-[var(--color-accent)]/40 hover:shadow-sm hover:shadow-[var(--color-accent)]/10 sm:px-3 sm:py-1.5 sm:text-sm"
       aria-label={ariaLabel}
     >
       {currentLabel}

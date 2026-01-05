@@ -15,6 +15,36 @@ export async function BlogFooter() {
             <span className="text-[var(--color-text-muted)] text-sm">
               © {year} {t("footer.rights")}
             </span>
+            <a
+              href="https://flying-rat.studio"
+              rel="nofollow noopener"
+              className="text-sm text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors"
+            >
+              <span className="inline-flex items-center gap-1">
+                {t("footer.studioSite")}
+                <svg
+                  className="w-3.5 h-3.5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5h5m0 0v5m0-5L10 14"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 9v10a1 1 0 001 1h10"
+                  />
+                </svg>
+              </span>
+            </a>
           </div>
           <p className="text-[var(--color-text-subtle)] text-sm">{t("footer.cookies")}</p>
         </div>
