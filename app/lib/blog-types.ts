@@ -24,5 +24,5 @@ export interface PostMeta extends PostFrontmatter {
 export interface Post extends PostMeta {
   content: string;
   contentHtml: string;
-  toc: TocItem[];
+  tocItems: TocItem[];
 }

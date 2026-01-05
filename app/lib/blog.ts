@@ -197,7 +197,7 @@ const getPostBySlugCached = cache((slug: string): Post | null => {
     readingTime,
     content,
     contentHtml,
-    toc: frontmatter.toc ? toc : [],
+    tocItems: frontmatter.toc ? toc : [],
   };
 });
 
@@ -215,7 +215,7 @@ const getAllPostsCached = cache((): PostMeta[] => {
         return null;
       }
       // Return meta only (without content)
-      const { content, contentHtml, toc, ...meta } = post;
+      const { content, contentHtml, tocItems, ...meta } = post;
       return meta;
     })
     .filter((post): post is PostMeta => post !== null)

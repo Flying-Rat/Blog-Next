@@ -190,9 +190,9 @@ export default async function BlogPostPage({ params }: PageProps) {
               )}
             </div>
 
-            {post.toc.length > 0 && (
+            {post.tocItems.length > 0 && (
               <div className="mt-10 lg:mt-0">
-                <TableOfContents items={post.toc} />
+                <TableOfContents items={post.tocItems} />
               </div>
             )}
           </div>
