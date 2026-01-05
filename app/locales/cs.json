@@ -1,0 +1,58 @@
+{
+  "header": {
+    "techBlog": "Tech Blog",
+    "backToStudio": "Zpět na web studia",
+    "studio": "Studio",
+    "rssFeed": "RSS kanál",
+    "toggleLanguage": "Přepnout jazyk",
+    "toggleTheme": "Přepnout motiv",
+    "lightMode": "Přepnout na světlý režim",
+    "darkMode": "Přepnout na tmavý režim",
+    "languageLabels": {
+      "en": "EN",
+      "cs": "CS"
+    }
+  },
+  "brand": {
+    "logoAlt": "Flying Rat Studio"
+  },
+  "home": {
+    "title": "Game dev a tech deep dive",
+    "subtitle": "Poznámky z vývoje, postmortemy a tvrdě získané lekce z reálných projektů.",
+    "latest": "Nejnovější",
+    "readArticle": "Přečíst článek",
+    "moreArticles": "Další články",
+    "allCategories": "Vše",
+    "noPosts": "Zatím žádné články. Zkuste to později.",
+    "minRead": "min čtení"
+  },
+  "post": {
+    "backToAll": "Zpět na všechny články",
+    "relatedPosts": "Související články",
+    "onThisPage": "Na této stránce",
+    "copyHeadingLink": "Zkopírovat odkaz na sekci",
+    "notFound": "Článek nenalezen",
+    "scrollTop": "↑ Nahoru",
+    "scrollTopLabel": "Přejít nahoru"
+  },
+  "contact": {
+    "title": "Chcete s námi spolupracovat?",
+    "subtitle": "Hledáme talentované vývojáře. Napište Martymu, pokud chcete dělat hry společně.",
+    "emailMarty": "Napsat Martymu",
+    "findUsOn": "Najdete nás na",
+    "martyName": "Marty",
+    "available": "K dispozici",
+    "hashTag": "#flyingWithRats",
+    "hashTagLabel": "Flying Rat Studio na X",
+    "social": {
+      "github": "GitHub",
+      "discord": "Discord",
+      "x": "X",
+      "youtube": "YouTube"
+    }
+  },
+  "footer": {
+    "rights": "Všechna práva vyhrazena.",
+    "cookies": "Žádné cookies, snědli jsme je. 🍪"
+  }
+}

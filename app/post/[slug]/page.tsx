@@ -1,0 +1,205 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { BackToPostsLink } from "../../components/blog/BackToPostsLink";
+import { ContactSection } from "../../components/blog/ContactSection";
+import { CopyCodeButton } from "../../components/blog/CopyCodeButton";
+import { HeadingLinks } from "../../components/blog/HeadingLinks";
+import { PostMeta } from "../../components/blog/PostMeta";
+import { TableOfContents } from "../../components/blog/TableOfContents";
+import { getTranslations } from "../../i18n/server";
+import { getAllPostSlugs, getAuthors, getPostBySlug, getRelatedPosts } from "../../lib/blog";
+
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
+
+const SITE_URL = "https://tech.flying-rat.studio";
+const DEFAULT_OG_IMAGE = `${SITE_URL}/fr_horizontal_black.png`;
+
+export async function generateStaticParams() {
+  const slugs = getAllPostSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
+
+function resolveOgImage(src: string) {
+  if (src.startsWith("http://") || src.startsWith("https://")) {
+    return src;
+  }
+  if (src.startsWith("//")) {
+    return `https:${src}`;
+  }
+  if (src.startsWith("/")) {
+    return `${SITE_URL}${src}`;
+  }
+  return `${SITE_URL}/${src}`;
+}
+
+function extractFirstImage(content: string) {
+  const markdownMatch = content.matchAll(/!\[[^\]]*]\(([^)\s]+)(?:\s+"[^"]*")?\)/g).next().value;
+  const htmlMatch = content.matchAll(/<img[^>]*\s+src=["']([^"']+)["'][^>]*>/gi).next().value;
+
+  if (markdownMatch && htmlMatch) {
+    return markdownMatch.index <= htmlMatch.index ? markdownMatch[1] : htmlMatch[1];
+  }
+
+  return markdownMatch?.[1] ?? htmlMatch?.[1] ?? null;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+
+  if (!post) {
+    const { t } = await getTranslations();
+    return { title: t("post.notFound") };
+  }
+
+  const url = `${SITE_URL}/post/${post.slug}`;
+  const image = resolveOgImage(extractFirstImage(post.content) ?? DEFAULT_OG_IMAGE);
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url,
+      siteName: "Flying Rat Tech Blog",
+      locale: "en_US",
+      type: "article",
+      publishedTime: post.date,
+      authors: getAuthors(post),
+      tags: post.tags,
+      images: [{ url: image }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [image],
+    },
+  };
+}
+
+export default async function BlogPostPage({ params }: PageProps) {
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+
+  if (!post) {
+    notFound();
+  }
+
+  const { t } = await getTranslations();
+  const authors = getAuthors(post);
+  const relatedPosts = getRelatedPosts(post.slug, 3);
+
+  return (
+    <>
+      <article className="container mx-auto px-6 py-12">
+        <div className="max-w-6xl mx-auto">
+          <BackToPostsLink />
+
+          <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_260px] lg:gap-10">
+            <div>
+              <header className="mb-8">
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {post.categories?.map((category) => (
+                    <span
+                      key={category}
+                      className="px-3 py-1 text-sm font-medium rounded-full bg-[var(--color-accent)] text-white"
+                    >
+                      {category}
+                    </span>
+                  ))}
+                </div>
+
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{post.title}</h1>
+
+                <PostMeta date={post.date} readingTime={post.readingTime} authors={authors} />
+              </header>
+
+              <div
+                className="prose prose-lg dark:prose-invert max-w-none
+                  prose-headings:font-semibold prose-headings:text-[var(--color-text)]
+                  prose-h1:text-3xl prose-h1:mb-4
+                  prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
+                  prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
+                  prose-h4:text-lg prose-h4:mt-4 prose-h4:mb-2
+                  prose-p:text-[var(--color-text-secondary)] prose-p:leading-[1.8] prose-p:my-6
+                  prose-a:text-[var(--color-accent)] prose-a:no-underline hover:prose-a:underline
+                  prose-strong:text-[var(--color-text)]
+                  prose-code:text-sm prose-code:font-mono
+                  prose-pre:p-0 prose-pre:bg-transparent prose-pre:border prose-pre:border-[var(--color-border)] prose-pre:rounded-xl prose-pre:overflow-hidden
+                  [&_pre_code]:block [&_pre_code]:p-4 [&_pre_code]:overflow-x-auto [&_pre_code]:text-sm
+                  [&_:not(pre)>code]:text-[var(--color-accent)] [&_:not(pre)>code]:bg-[var(--color-surface-light)] [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5 [&_:not(pre)>code]:rounded [&_:not(pre)>code]:before:content-none [&_:not(pre)>code]:after:content-none
+                  prose-img:rounded-lg
+                  prose-blockquote:border-[var(--color-accent)] prose-blockquote:bg-[var(--color-surface-light)] prose-blockquote:rounded-r-lg prose-blockquote:py-1
+                  prose-ul:text-[var(--color-text-secondary)]
+                  prose-ol:text-[var(--color-text-secondary)]
+                  prose-li:marker:text-[var(--color-accent)]
+                  prose-table:text-sm prose-table:text-[var(--color-text)]
+                  prose-th:bg-[var(--color-surface-light)] prose-th:px-4 prose-th:py-2 prose-th:text-[var(--color-text)]
+                  prose-td:px-4 prose-td:py-2 prose-td:border-[var(--color-border)] prose-td:text-[var(--color-text)]"
+                // biome-ignore lint/security/noDangerouslySetInnerHtml: Required for markdown rendering
+                dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+              />
+
+              {post.tags && post.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-8">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 text-sm rounded-full glass-subtle border border-[var(--color-border)]/30 text-[var(--color-text-muted)]"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <CopyCodeButton />
+
+              {relatedPosts.length > 0 && (
+                <section className="mt-12">
+                  <div className="flex items-center gap-4 mb-6">
+                    <h2 className="text-xl font-bold">{t("post.relatedPosts")}</h2>
+                    <div className="flex-1 h-px bg-gradient-to-r from-[var(--color-border)] to-transparent" />
+                  </div>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    {relatedPosts.map((related) => (
+                      <a
+                        key={related.slug}
+                        href={`/post/${related.slug}.html`}
+                        className="group block h-full"
+                      >
+                        <div className="h-full p-5 rounded-xl glass-card border border-[var(--color-border)]/50 transition-all duration-300 hover:border-[var(--color-accent)]/40 hover:translate-y-[-2px] hover:shadow-lg hover:shadow-[var(--color-accent)]/10">
+                          <h3 className="text-base font-semibold mb-2 group-hover:text-[var(--color-accent)] transition-colors duration-300">
+                            {related.title}
+                          </h3>
+                          <p className="text-sm text-[var(--color-text-muted)] line-clamp-3">
+                            {related.excerpt}
+                          </p>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </section>
+              )}
+            </div>
+
+            {post.toc.length > 0 && (
+              <div className="mt-10 lg:mt-0">
+                <TableOfContents items={post.toc} />
+              </div>
+            )}
+          </div>
+        </div>
+        <HeadingLinks copyLabel={t("post.copyHeadingLink")} />
+      </article>
+      <ContactSection />
+    </>
+  );
+}

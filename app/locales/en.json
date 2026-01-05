@@ -1,0 +1,58 @@
+{
+  "header": {
+    "techBlog": "Tech Blog",
+    "backToStudio": "Back to studio homepage",
+    "studio": "Studio",
+    "rssFeed": "RSS feed",
+    "toggleLanguage": "Toggle language",
+    "toggleTheme": "Toggle theme",
+    "lightMode": "Switch to light mode",
+    "darkMode": "Switch to dark mode",
+    "languageLabels": {
+      "en": "EN",
+      "cs": "CS"
+    }
+  },
+  "brand": {
+    "logoAlt": "Flying Rat Studio"
+  },
+  "home": {
+    "title": "Game dev insights and technical deep dives",
+    "subtitle": "Field notes, postmortems, and hard-won lessons from real projects.",
+    "latest": "Latest",
+    "readArticle": "Read article",
+    "moreArticles": "More articles",
+    "allCategories": "All",
+    "noPosts": "No posts yet. Check back soon!",
+    "minRead": "min read"
+  },
+  "post": {
+    "backToAll": "Back to all posts",
+    "relatedPosts": "Related posts",
+    "onThisPage": "On this page",
+    "copyHeadingLink": "Copy link to section",
+    "notFound": "Post not found",
+    "scrollTop": "↑ Top",
+    "scrollTopLabel": "Scroll to top"
+  },
+  "contact": {
+    "title": "Want to work with us?",
+    "subtitle": "We're always looking for talented developers. Drop Marty a line if you want to build games together.",
+    "emailMarty": "Email Marty",
+    "findUsOn": "Find us on",
+    "martyName": "Marty",
+    "available": "Available",
+    "hashTag": "#flyingWithRats",
+    "hashTagLabel": "Flying Rat Studio on X",
+    "social": {
+      "github": "GitHub",
+      "discord": "Discord",
+      "x": "X",
+      "youtube": "YouTube"
+    }
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "cookies": "No cookies here, we ate them all. 🍪"
+  }
+}
