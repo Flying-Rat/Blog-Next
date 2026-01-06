@@ -55,5 +55,12 @@
     "rights": "All rights reserved.",
     "cookies": "No cookies here, we ate them all. 🍪",
     "studioSite": "Studio homepage"
+  },
+  "notFound": {
+    "title": "404",
+    "heading": "Oops! This page flew away…",
+    "description": "Looks like our rat got lost in the code maze. The page you're looking for doesn't exist, was moved, or maybe it was never real to begin with.",
+    "suggestion": "Perhaps it's hiding in a different branch?",
+    "backHome": "Back home"
   }
 }

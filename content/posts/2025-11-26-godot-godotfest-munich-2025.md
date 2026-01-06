@@ -1,6 +1,7 @@
 ---
 title: "GodotFest Munich 2025"
 date: 2025-11-26T10:00:00+02:00
+id: k1z5w3p6
 authors:
   - Jan Mesarč
   - Jakub Hubáček

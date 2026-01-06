@@ -1,5 +1,18 @@
 import type { NextConfig } from "next";
 
+const legacyPostRedirects = [
+  { slug: "welcome-to-our-blog", id: "r7k2m9p4" },
+  { slug: "ue-subsystems", id: "x3n8v5q2" },
+  { slug: "babylonJS-lessons", id: "t6w1j4h8" },
+  { slug: "serialized-pipeline-unity", id: "b9c3f7a1" },
+  { slug: "godot4-features-and-improvements", id: "d5s2l6e9" },
+  { slug: "godot-itch-plugin", id: "m4y8g1n7" },
+  { slug: "godot-godotfest-munich-2025", id: "k1z5w3p6" },
+].flatMap(({ slug, id }) => [
+  { source: `/post/${slug}.html`, destination: `/${slug}-${id}`, permanent: true },
+  { source: `/post/${slug}`, destination: `/${slug}-${id}`, permanent: true },
+]);
+
 const nextConfig = {
   reactStrictMode: true,
   output: "standalone",
@@ -9,14 +22,8 @@ const nextConfig = {
   experimental: {
     turbopackFileSystemCacheForDev: true,
   },
-  // Handle .html suffix for SEO compatibility with old Jekyll URLs
-  async rewrites() {
-    return [
-      {
-        source: "/post/:slug.html",
-        destination: "/post/:slug",
-      },
-    ];
+  async redirects() {
+    return legacyPostRedirects;
   },
 } satisfies NextConfig;
 

@@ -1,6 +1,7 @@
 ---
 title: "Serialized Pipeline with SerializeReference"
 date: 2025-02-06T16:00:00+02:00
+id: b9c3f7a1
 author: Xuan Hung Do
 categories:
   - unity

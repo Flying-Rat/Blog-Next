@@ -1,6 +1,7 @@
 ---
 title: "Lessons Learned While Making a Responsive UI in BabylonJS for a web game"
 date: 2024-12-02T9:00:00+02:00
+id: t6w1j4h8
 author: Kristýna Böhmová
 categories:
   - babylonJS
@@ -11,8 +12,6 @@ tags:
   - gamedev
 toc: true
 ---
-
-# Lessons Learned While Making a Responsive UI in BabylonJS for a web game
 
 Whether you're here to learn about BabylonJS or stumbled upon this article during an internet dive—welcome! 
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getTranslations } from "../../i18n/server";
+import { getFullSlug } from "../../lib/blog";
 import type { PostMeta } from "../../lib/blog-types";
 import { formatDate, getAuthors } from "../../lib/blog-utils";
 import { ContactSection } from "./ContactSection";
@@ -64,7 +65,7 @@ export async function HomePageContent({ posts }: HomePageContentProps) {
         <div className="max-w-6xl mx-auto">
           {featuredPost && (
             <Link
-              href={`/post/${featuredPost.slug}.html`}
+              href={`/${getFullSlug(featuredPost)}`}
               className="group block mb-16 md:mb-20 animate-hero [--animation-delay:240ms]"
             >
               <article className="relative p-8 md:p-12 rounded-2xl glass-card border border-[var(--color-border)]/50 overflow-hidden transition-all duration-500 hover:border-[var(--color-accent)]/40 hover:shadow-[0_0_60px_-15px_var(--color-accent)]">

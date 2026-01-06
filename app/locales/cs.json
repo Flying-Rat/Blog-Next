@@ -55,5 +55,12 @@
     "rights": "Všechna práva vyhrazena.",
     "cookies": "Žádné cookies, snědli jsme je. 🍪",
     "studioSite": "Web studia"
+  },
+  "notFound": {
+    "title": "404",
+    "heading": "Jejda! Tahle stránka odletěla…",
+    "description": "Vypadá to, že se naše krysa ztratila v bludišti kódu. Stránka, kterou hledáte, neexistuje, byla přesunuta, nebo možná nikdy nebyla skutečná.",
+    "suggestion": "Možná se schovává v jiné větvi?",
+    "backHome": "Zpět domů"
   }
 }

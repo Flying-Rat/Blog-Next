@@ -1,4 +1,4 @@
-import { getAllPosts } from "../lib/blog";
+import { getAllPosts, getFullSlug } from "../lib/blog";
 
 const SITE_URL = "https://tech.flying-rat.studio";
 const SITE_TITLE = "Flying Rat Studio Tech Blog";
@@ -19,7 +19,7 @@ export async function GET() {
 
   const rssItems = posts
     .map((post) => {
-      const url = `${SITE_URL}/post/${post.slug}.html`;
+      const url = `${SITE_URL}/${getFullSlug(post)}`;
       const pubDate = new Date(post.date).toUTCString();
 
       return `

@@ -26,3 +26,7 @@ export function getAuthors(post: PostMeta): string[] {
   }
   return [];
 }
+
+export function getFullSlug(post: { slug: string; id: string }): string {
+  return `${post.slug}-${post.id}`;
+}

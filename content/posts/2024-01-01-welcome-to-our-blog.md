@@ -1,6 +1,7 @@
 ---
 title: "Welcome to our blog!"
 date: 2024-01-01T14:00:00+02:00
+id: r7k2m9p4
 categories:
   - update
 tags:

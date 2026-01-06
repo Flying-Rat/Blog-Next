@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { PostMeta } from "../../lib/blog-types";
-import { formatDate, getAuthors } from "../../lib/blog-utils";
+import { formatDate, getAuthors, getFullSlug } from "../../lib/blog-utils";
 
 interface HomePostFilterProps {
   posts: PostMeta[];
@@ -76,7 +76,7 @@ export function HomePostFilter({
         {filteredPosts.map((post, index) => {
           const authors = getAuthors(post);
           return (
-            <Link key={post.slug} href={`/post/${post.slug}.html`} className="group block">
+            <Link key={post.slug} href={`/${getFullSlug(post)}`} className="group block">
               <article className="relative h-full p-6 rounded-xl glass-card border border-[var(--color-border)]/50 overflow-hidden transition-all duration-300 hover:border-[var(--color-accent)]/40 hover:translate-y-[-2px] hover:shadow-lg hover:shadow-[var(--color-accent)]/10">
                 <span className="absolute top-4 right-4 text-6xl font-bold text-[var(--color-surface-lighter)] group-hover:text-[var(--color-accent)]/10 transition-colors duration-300 select-none">
                   {String(index + 2).padStart(2, "0")}

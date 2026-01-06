@@ -1,6 +1,7 @@
 export interface PostFrontmatter {
   title: string;
   date: string;
+  id: string;
   author?: string;
   authors?: string[];
   categories?: string[];

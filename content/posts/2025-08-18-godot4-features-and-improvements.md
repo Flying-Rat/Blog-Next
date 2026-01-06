@@ -1,6 +1,7 @@
 ---
 title: "Godot 4 Features and Improvements"
 date: 2025-08-18T10:00:00+02:00
+id: d5s2l6e9
 author: Jan Mesarč
 categories:
   - godot

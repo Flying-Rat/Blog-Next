@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BackToPostsLink } from "../../components/blog/BackToPostsLink";
-import { ContactSection } from "../../components/blog/ContactSection";
-import { CopyCodeButton } from "../../components/blog/CopyCodeButton";
-import { HeadingLinks } from "../../components/blog/HeadingLinks";
-import { PostMeta } from "../../components/blog/PostMeta";
-import { TableOfContents } from "../../components/blog/TableOfContents";
-import { getTranslations } from "../../i18n/server";
-import { getAllPostSlugs, getAuthors, getPostBySlug, getRelatedPosts } from "../../lib/blog";
+import { BackToPostsLink } from "../components/blog/BackToPostsLink";
+import { ContactSection } from "../components/blog/ContactSection";
+import { CopyCodeButton } from "../components/blog/CopyCodeButton";
+import { HeadingLinks } from "../components/blog/HeadingLinks";
+import { PostMeta } from "../components/blog/PostMeta";
+import { TableOfContents } from "../components/blog/TableOfContents";
+import { getTranslations } from "../i18n/server";
+import {
+  getAllFullSlugs,
+  getAuthors,
+  getFullSlug,
+  getPostByPath,
+  getRelatedPosts,
+} from "../lib/blog";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -17,7 +23,7 @@ const SITE_URL = "https://tech.flying-rat.studio";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/fr_horizontal_black.png`;
 
 export async function generateStaticParams() {
-  const slugs = getAllPostSlugs();
+  const slugs = getAllFullSlugs();
   return slugs.map((slug) => ({ slug }));
 }
 
@@ -47,14 +53,14 @@ function extractFirstImage(content: string) {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = getPostByPath(slug);
 
   if (!post) {
     const { t } = await getTranslations();
     return { title: t("post.notFound") };
   }
 
-  const url = `${SITE_URL}/post/${post.slug}`;
+  const url = `${SITE_URL}/${getFullSlug(post)}`;
   const image = resolveOgImage(extractFirstImage(post.content) ?? DEFAULT_OG_IMAGE);
 
   return {
@@ -86,7 +92,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = getPostByPath(slug);
 
   if (!post) {
     notFound();
@@ -172,7 +178,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                     {relatedPosts.map((related) => (
                       <a
                         key={related.slug}
-                        href={`/post/${related.slug}.html`}
+                        href={`/${getFullSlug(related)}`}
                         className="group block h-full"
                       >
                         <div className="h-full p-5 rounded-xl glass-card border border-[var(--color-border)]/50 transition-all duration-300 hover:border-[var(--color-accent)]/40 hover:translate-y-[-2px] hover:shadow-lg hover:shadow-[var(--color-accent)]/10">

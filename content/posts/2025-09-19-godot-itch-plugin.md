@@ -1,6 +1,7 @@
 ---
 title: "Godot Itch Plugin"
 date: 2025-09-19T10:00:00+02:00
+id: m4y8g1n7
 authors:
   - Jan Mesarč
   - Jakub Hubáček

@@ -12,7 +12,9 @@ import type { Post, PostFrontmatter, PostMeta, TocItem } from "./blog-types";
 import { calculateReadingTime } from "./blog-utils";
 
 export type { Post, PostFrontmatter, PostMeta } from "./blog-types";
-export { formatDate, getAuthors } from "./blog-utils";
+export { formatDate, getAuthors, getFullSlug } from "./blog-utils";
+
+import { getFullSlug } from "./blog-utils";
 
 const postsDirectory = path.join(process.cwd(), "content/posts");
 
@@ -147,6 +149,33 @@ function extractExcerpt(content: string, maxLength = 200): string {
 
 export function getAllPostSlugs(): string[] {
   return getAllFilenames().map(filenameToSlug);
+}
+
+function extractIdFromPath(path: string): string | null {
+  const match = path.match(/-([a-z0-9]{8})$/i);
+  return match ? match[1] : null;
+}
+
+function findPostByIdCached(id: string): Post | null {
+  const posts = getAllPosts();
+  const meta = posts.find((p) => p.id === id);
+  if (!meta) {
+    return null;
+  }
+  return getPostBySlugCached(meta.slug);
+}
+
+export function getPostByPath(path: string): Post | null {
+  const id = extractIdFromPath(path);
+  if (!id) {
+    return null;
+  }
+  return findPostByIdCached(id);
+}
+
+export function getAllFullSlugs(): string[] {
+  const posts = getAllPosts();
+  return posts.map((post) => getFullSlug(post));
 }
 
 const getPostBySlugCached = cache((slug: string): Post | null => {
