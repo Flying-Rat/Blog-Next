@@ -24,7 +24,9 @@
     "moreArticles": "More articles",
     "allCategories": "All",
     "noPosts": "No posts yet. Check back soon!",
-    "minRead": "min read"
+    "minRead": "min read",
+    "searchLabel": "Search posts",
+    "searchPlaceholder": "Search articles"
   },
   "post": {
     "backToAll": "Back to all posts",
@@ -33,7 +35,15 @@
     "copyHeadingLink": "Copy link to section",
     "notFound": "Post not found",
     "scrollTop": "↑ Top",
-    "scrollTopLabel": "Scroll to top"
+    "scrollTopLabel": "Scroll to top",
+    "newerPost": "Newer post",
+    "olderPost": "Older post"
+  },
+  "taxonomy": {
+    "tagTitle": "Tag",
+    "categoryTitle": "Category",
+    "postCount": "posts",
+    "noPosts": "No posts found."
   },
   "contact": {
     "title": "Want to work with us?",

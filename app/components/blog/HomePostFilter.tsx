@@ -11,6 +11,8 @@ interface HomePostFilterProps {
   allLabel: string;
   minReadLabel: string;
   readArticleLabel: string;
+  searchLabel: string;
+  searchPlaceholder: string;
 }
 
 export function HomePostFilter({
@@ -19,6 +21,8 @@ export function HomePostFilter({
   allLabel,
   minReadLabel,
   readArticleLabel,
+  searchLabel,
+  searchPlaceholder,
 }: HomePostFilterProps) {
   const categories = useMemo(() => {
     const set = new Set<string>();
@@ -32,13 +36,31 @@ export function HomePostFilter({
 
   const segments = [allLabel, ...categories];
   const [activeCategory, setActiveCategory] = useState(allLabel);
+  const [searchQuery, setSearchQuery] = useState("");
+  const normalizedQuery = searchQuery.trim().toLowerCase();
 
   const filteredPosts = useMemo(() => {
-    if (activeCategory === allLabel) {
-      return posts;
+    let result = posts;
+    if (activeCategory !== allLabel) {
+      result = result.filter((post) => post.categories?.includes(activeCategory));
     }
-    return posts.filter((post) => post.categories?.includes(activeCategory));
-  }, [activeCategory, allLabel, posts]);
+    if (!normalizedQuery) {
+      return result;
+    }
+    return result.filter((post) => {
+      const authors = post.authors ?? (post.author ? [post.author] : []);
+      const haystack = [
+        post.title,
+        post.excerpt ?? "",
+        ...(post.tags ?? []),
+        ...(post.categories ?? []),
+        ...authors,
+      ]
+        .join(" ")
+        .toLowerCase();
+      return haystack.includes(normalizedQuery);
+    });
+  }, [activeCategory, allLabel, normalizedQuery, posts]);
 
   return (
     <>
@@ -47,29 +69,42 @@ export function HomePostFilter({
           <h2 className="text-2xl font-bold">{title}</h2>
           <div className="flex-1 h-px bg-gradient-to-r from-[var(--color-border)] to-transparent" />
         </div>
-        <fieldset aria-label={title} className="min-w-0">
-          <legend className="sr-only">{title}</legend>
-          <div className="inline-flex w-full items-center gap-2 rounded-full border border-[var(--color-border)]/40 bg-[var(--color-surface-light)]/60 p-1 glass-subtle overflow-x-auto no-scrollbar sm:w-auto sm:flex-wrap max-w-full">
-            {segments.map((segment) => {
-              const isActive = segment === activeCategory;
-              return (
-                <button
-                  key={segment}
-                  type="button"
-                  onClick={() => setActiveCategory(segment)}
-                  className={`whitespace-nowrap px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] rounded-full transition-all duration-300 sm:px-4 sm:py-2 sm:text-xs ${
-                    isActive
-                      ? "bg-[var(--color-accent)] text-white shadow-lg shadow-[var(--color-accent)]/30"
-                      : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface)]"
-                  }`}
-                  aria-pressed={isActive}
-                >
-                  {segment}
-                </button>
-              );
-            })}
-          </div>
-        </fieldset>
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <fieldset aria-label={title} className="min-w-0">
+            <legend className="sr-only">{title}</legend>
+            <div className="inline-flex w-full items-center gap-2 rounded-full border border-[var(--color-border)]/40 bg-[var(--color-surface-light)]/60 p-1 glass-subtle overflow-x-auto no-scrollbar sm:w-auto sm:flex-wrap max-w-full">
+              {segments.map((segment) => {
+                const isActive = segment === activeCategory;
+                return (
+                  <button
+                    key={segment}
+                    type="button"
+                    onClick={() => setActiveCategory(segment)}
+                    className={`whitespace-nowrap px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] rounded-full transition-all duration-300 sm:px-4 sm:py-2 sm:text-xs ${
+                      isActive
+                        ? "bg-[var(--color-accent)] text-white shadow-lg shadow-[var(--color-accent)]/30"
+                        : "text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-[var(--color-surface)]"
+                    }`}
+                    aria-pressed={isActive}
+                  >
+                    {segment}
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+          <label htmlFor="post-search" className="sr-only">
+            {searchLabel}
+          </label>
+          <input
+            id="post-search"
+            type="search"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder={searchPlaceholder}
+            className="w-full md:w-64 rounded-xl border border-[var(--color-border)]/40 bg-[var(--color-surface-light)]/70 px-4 py-2 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]/30 transition"
+          />
+        </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">

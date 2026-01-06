@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BackToPostsLink } from "../components/blog/BackToPostsLink";
 import { ContactSection } from "../components/blog/ContactSection";
@@ -8,7 +9,9 @@ import { PostMeta } from "../components/blog/PostMeta";
 import { TableOfContents } from "../components/blog/TableOfContents";
 import { getTranslations } from "../i18n/server";
 import {
+  formatDate,
   getAllFullSlugs,
+  getAllPosts,
   getAuthors,
   getFullSlug,
   getPostByPath,
@@ -101,6 +104,11 @@ export default async function BlogPostPage({ params }: PageProps) {
   const { t } = await getTranslations();
   const authors = getAuthors(post);
   const relatedPosts = getRelatedPosts(post.slug, 3);
+  const allPosts = getAllPosts();
+  const currentIndex = allPosts.findIndex((item) => item.slug === post.slug);
+  const newerPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+  const olderPost =
+    currentIndex >= 0 && currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
   return (
     <>
@@ -113,12 +121,13 @@ export default async function BlogPostPage({ params }: PageProps) {
               <header className="mb-8">
                 <div className="flex flex-wrap gap-2 mb-4">
                   {post.categories?.map((category) => (
-                    <span
+                    <Link
                       key={category}
+                      href={`/categories/${encodeURIComponent(category.toLowerCase())}`}
                       className="px-3 py-1 text-sm font-medium rounded-full bg-[var(--color-accent)] text-white"
                     >
                       {category}
-                    </span>
+                    </Link>
                   ))}
                 </div>
 
@@ -156,14 +165,84 @@ export default async function BlogPostPage({ params }: PageProps) {
               {post.tags && post.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-8">
                   {post.tags.map((tag) => (
-                    <span
+                    <Link
                       key={tag}
+                      href={`/tags/${encodeURIComponent(tag.toLowerCase())}`}
                       className="px-3 py-1 text-sm rounded-full glass-subtle border border-[var(--color-border)]/30 text-[var(--color-text-muted)]"
                     >
                       #{tag}
-                    </span>
+                    </Link>
                   ))}
                 </div>
+              )}
+
+              {(newerPost || olderPost) && (
+                <section className="mt-10">
+                  <div className="grid gap-4 md:grid-cols-2 mb-6">
+                    {newerPost ? (
+                      <Link href={`/${getFullSlug(newerPost)}`} className="group block h-full">
+                        <div className="relative h-full p-4 rounded-xl border border-[var(--color-border)]/40 bg-[var(--color-surface-light)]/50 overflow-hidden transition-all duration-300 hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-surface)]/80 hover:shadow-lg hover:shadow-[var(--color-accent)]/10">
+                          <span className="absolute left-0 top-0 h-full w-1 bg-[var(--color-accent)]/60" />
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] rounded-full bg-[var(--color-accent)]/15 text-[var(--color-accent)]">
+                              {t("post.newerPost")}
+                            </span>
+                            <svg
+                              className="w-4 h-4 text-[var(--color-accent)]"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <title>{t("post.newerPost")}</title>
+                              <path d="M15 18l-6-6 6-6" />
+                            </svg>
+                          </div>
+                          <h3 className="text-base font-semibold mb-2 group-hover:text-[var(--color-accent)] transition-colors duration-300">
+                            {newerPost.title}
+                          </h3>
+                          <p className="text-sm text-[var(--color-text-muted)]">
+                            {formatDate(newerPost.date)}
+                          </p>
+                        </div>
+                      </Link>
+                    ) : (
+                      <div className="hidden md:block" />
+                    )}
+                    {olderPost ? (
+                      <Link href={`/${getFullSlug(olderPost)}`} className="group block h-full">
+                        <div className="relative h-full p-4 rounded-xl border border-[var(--color-border)]/40 bg-[var(--color-surface-light)]/50 overflow-hidden transition-all duration-300 hover:border-[var(--color-accent)]/60 hover:bg-[var(--color-surface)]/80 hover:shadow-lg hover:shadow-[var(--color-accent)]/10">
+                          <span className="absolute right-0 top-0 h-full w-1 bg-[var(--color-accent)]/60" />
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] rounded-full bg-[var(--color-accent)]/15 text-[var(--color-accent)]">
+                              {t("post.olderPost")}
+                            </span>
+                            <svg
+                              className="w-4 h-4 text-[var(--color-accent)]"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <title>{t("post.olderPost")}</title>
+                              <path d="M9 6l6 6-6 6" />
+                            </svg>
+                          </div>
+                          <h3 className="text-base font-semibold mb-2 group-hover:text-[var(--color-accent)] transition-colors duration-300">
+                            {olderPost.title}
+                          </h3>
+                          <p className="text-sm text-[var(--color-text-muted)]">
+                            {formatDate(olderPost.date)}
+                          </p>
+                        </div>
+                      </Link>
+                    ) : null}
+                  </div>
+                </section>
               )}
 
               <CopyCodeButton />
@@ -174,7 +253,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                     <h2 className="text-xl font-bold">{t("post.relatedPosts")}</h2>
                     <div className="flex-1 h-px bg-gradient-to-r from-[var(--color-border)] to-transparent" />
                   </div>
-                  <div className="grid md:grid-cols-3 gap-4">
+                  <div className="grid md:grid-cols-3 gap-4 mb-6">
                     {relatedPosts.map((related) => (
                       <a
                         key={related.slug}

@@ -69,13 +69,15 @@ export async function HomePageContent({ posts }: HomePageContentProps) {
               className="group block mb-16 md:mb-20 animate-hero [--animation-delay:240ms]"
             >
               <article className="relative p-8 md:p-12 rounded-2xl glass-card border border-[var(--color-border)]/50 overflow-hidden transition-all duration-500 hover:border-[var(--color-accent)]/40 hover:shadow-[0_0_60px_-15px_var(--color-accent)]">
-                <div className="reduce-motion-gradient absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="reduce-motion-gradient absolute inset-0 bg-gradient-to-br from-[var(--color-surface-light)]/80 via-transparent to-[var(--color-accent-dark)]/10 opacity-60" />
+                <div className="absolute -bottom-8 left-10 h-24 w-24 rounded-full bg-[var(--color-accent-dark)]/10 blur-2xl" />
+                <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-[var(--color-accent)]/70 to-transparent" />
+                <div className="absolute top-6 right-6 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-[0.25em] text-white bg-[var(--color-accent)] shadow-lg shadow-[var(--color-accent)]/30">
+                  {t("home.latest")}
+                </div>
 
                 <div className="relative">
                   <div className="flex flex-wrap items-center gap-2 mb-6">
-                    <span className="px-2.5 py-1 text-[10px] font-semibold rounded-full bg-[var(--color-accent)] text-white uppercase tracking-[0.18em] sm:px-3 sm:py-1 sm:text-xs sm:tracking-wide">
-                      {t("home.latest")}
-                    </span>
                     {featuredPost.categories?.slice(0, 2).map((category) => (
                       <span
                         key={category}
@@ -139,6 +141,8 @@ export async function HomePageContent({ posts }: HomePageContentProps) {
               allLabel={t("home.allCategories")}
               minReadLabel={t("home.minRead")}
               readArticleLabel={t("home.readArticle")}
+              searchLabel={t("home.searchLabel")}
+              searchPlaceholder={t("home.searchPlaceholder")}
             />
           )}
 

@@ -24,7 +24,9 @@
     "moreArticles": "Další články",
     "allCategories": "Vše",
     "noPosts": "Zatím žádné články. Zkuste to později.",
-    "minRead": "min čtení"
+    "minRead": "min čtení",
+    "searchLabel": "Hledat články",
+    "searchPlaceholder": "Hledat v článcích"
   },
   "post": {
     "backToAll": "Zpět na všechny články",
@@ -33,7 +35,15 @@
     "copyHeadingLink": "Zkopírovat odkaz na sekci",
     "notFound": "Článek nenalezen",
     "scrollTop": "↑ Nahoru",
-    "scrollTopLabel": "Přejít nahoru"
+    "scrollTopLabel": "Přejít nahoru",
+    "newerPost": "Novější článek",
+    "olderPost": "Starší článek"
+  },
+  "taxonomy": {
+    "tagTitle": "Štítek",
+    "categoryTitle": "Kategorie",
+    "postCount": "článků",
+    "noPosts": "Žádné články nenalezeny."
   },
   "contact": {
     "title": "Chcete s námi spolupracovat?",
