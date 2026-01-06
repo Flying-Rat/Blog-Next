@@ -37,7 +37,8 @@
     "scrollTop": "↑ Top",
     "scrollTopLabel": "Scroll to top",
     "newerPost": "Newer post",
-    "olderPost": "Older post"
+    "olderPost": "Older post",
+    "continueReading": "Continue reading"
   },
   "taxonomy": {
     "tagTitle": "Tag",

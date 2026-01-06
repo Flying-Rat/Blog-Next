@@ -137,19 +137,19 @@ export default async function BlogPostPage({ params }: PageProps) {
               </header>
 
               <div
-                className="prose prose-lg dark:prose-invert max-w-none
+                className="prose prose-lg dark:prose-invert max-w-[68ch]
                   prose-headings:font-semibold prose-headings:text-[var(--color-text)]
                   prose-h1:text-3xl prose-h1:mb-4
                   prose-h2:text-2xl prose-h2:mt-8 prose-h2:mb-4
                   prose-h3:text-xl prose-h3:mt-6 prose-h3:mb-3
                   prose-h4:text-lg prose-h4:mt-4 prose-h4:mb-2
-                  prose-p:text-[var(--color-text-secondary)] prose-p:leading-[1.8] prose-p:my-6
+                  prose-p:text-[var(--color-text-secondary)] prose-p:leading-[1.9] prose-p:my-5
                   prose-a:text-[var(--color-accent)] prose-a:no-underline hover:prose-a:underline
                   prose-strong:text-[var(--color-text)]
                   prose-code:text-sm prose-code:font-mono
                   prose-pre:p-0 prose-pre:bg-transparent prose-pre:border prose-pre:border-[var(--color-border)] prose-pre:rounded-xl prose-pre:overflow-hidden
                   [&_pre_code]:block [&_pre_code]:p-4 [&_pre_code]:overflow-x-auto [&_pre_code]:text-sm
-                  [&_:not(pre)>code]:text-[var(--color-accent)] [&_:not(pre)>code]:bg-[var(--color-surface-light)] [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5 [&_:not(pre)>code]:rounded [&_:not(pre)>code]:before:content-none [&_:not(pre)>code]:after:content-none
+                  [&_:not(pre)>code]:text-[var(--color-text-secondary)] [&_:not(pre)>code]:bg-[var(--color-surface-lighter)] [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5 [&_:not(pre)>code]:rounded [&_:not(pre)>code]:before:content-none [&_:not(pre)>code]:after:content-none
                   prose-img:rounded-lg
                   prose-blockquote:border-[var(--color-accent)] prose-blockquote:bg-[var(--color-surface-light)] prose-blockquote:rounded-r-lg prose-blockquote:py-1
                   prose-ul:text-[var(--color-text-secondary)]
@@ -260,13 +260,30 @@ export default async function BlogPostPage({ params }: PageProps) {
                         href={`/${getFullSlug(related)}`}
                         className="group block h-full"
                       >
-                        <div className="h-full p-5 rounded-xl glass-card border border-[var(--color-border)]/50 transition-all duration-300 hover:border-[var(--color-accent)]/40 hover:translate-y-[-2px] hover:shadow-lg hover:shadow-[var(--color-accent)]/10">
+                        <div className="h-full p-4 rounded-xl glass-card border border-[var(--color-border)]/50 transition-all duration-300 hover:border-[var(--color-accent)]/40 hover:translate-y-[-2px] hover:shadow-lg hover:shadow-[var(--color-accent)]/10">
                           <h3 className="text-base font-semibold mb-2 group-hover:text-[var(--color-accent)] transition-colors duration-300">
                             {related.title}
                           </h3>
                           <p className="text-sm text-[var(--color-text-muted)] line-clamp-3">
                             {related.excerpt}
                           </p>
+                          <div className="mt-4 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)]">
+                            <span>{t("post.continueReading")}</span>
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <title>{t("post.continueReading")}</title>
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                              />
+                            </svg>
+                          </div>
                         </div>
                       </a>
                     ))}

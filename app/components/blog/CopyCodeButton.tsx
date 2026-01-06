@@ -12,16 +12,17 @@ export function CopyCodeButton() {
       }
 
       pre.style.position = "relative";
+      pre.classList.add("code-block");
 
       const code = pre.querySelector("code");
       const className = code?.className || "";
       const languageMatch = className.match(/language-([a-z0-9-]+)/i);
-      if (languageMatch && !pre.querySelector(".code-meta")) {
-        const meta = document.createElement("div");
-        meta.className = "code-meta";
-        meta.textContent = languageMatch[1].replace(/-/g, " ").toUpperCase();
-        pre.insertBefore(meta, code ?? pre.firstChild);
-      }
+      const header = document.createElement("div");
+      header.className = "code-header";
+      const meta = document.createElement("div");
+      meta.className = "code-meta";
+      meta.textContent = languageMatch ? languageMatch[1].replace(/-/g, " ").toUpperCase() : "CODE";
+      header.appendChild(meta);
 
       const button = document.createElement("button");
       button.className = "copy-button";
@@ -35,6 +36,9 @@ export function CopyCodeButton() {
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
       `;
+
+      header.appendChild(button);
+      pre.insertBefore(header, code ?? pre.firstChild);
 
       button.addEventListener("click", async () => {
         const code = pre.querySelector("code");
@@ -54,13 +58,14 @@ export function CopyCodeButton() {
           }
         }
       });
-
-      pre.appendChild(button);
     });
 
     return () => {
-      document.querySelectorAll(".copy-button").forEach((btn) => {
-        btn.remove();
+      document.querySelectorAll("pre.code-block").forEach((pre) => {
+        pre.classList.remove("code-block");
+        pre.querySelectorAll(".code-header").forEach((header) => {
+          header.remove();
+        });
       });
     };
   }, []);
