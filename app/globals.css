@@ -834,10 +834,15 @@ a {
 }
 
 .prose img,
-.prose video,
-.prose iframe {
+.prose video {
   max-width: 100%;
   height: auto;
+}
+
+.prose iframe[src*="youtube"] {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
 }
 
 .prose table {
