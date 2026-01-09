@@ -84,6 +84,6 @@ export const socialLinks = [
   {
     id: "youtube",
     Icon: YouTubeIcon,
-    url: "https://www.youtube.com/channel/UC00SEDeDnkKrvnfVtjUf7CQ/featured",
+    url: "https://www.youtube.com/@flyingratstudio/featured",
   },
 ];
