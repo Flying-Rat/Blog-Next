@@ -4,6 +4,8 @@ const SITE_URL = "https://tech.flying-rat.studio";
 const SITE_TITLE = "Flying Rat Studio Tech Blog";
 const SITE_DESCRIPTION =
   "Game dev insights & technical deep-dives. Tutorials, postmortems, and lessons learned from shipping games across platforms.";
+export const dynamic = "force-static";
+export const revalidate = 3600;
 
 function escapeXml(text: string): string {
   return text

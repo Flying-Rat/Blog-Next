@@ -1,12 +1,14 @@
-import { getTranslations } from "../../i18n/server";
+"use client";
+
+import { useTranslations } from "../../i18n/client";
 import type { TocItem } from "../../lib/blog-types";
 
 interface TableOfContentsProps {
   items: TocItem[];
 }
 
-export async function TableOfContents({ items }: TableOfContentsProps) {
-  const { t } = await getTranslations();
+export function TableOfContents({ items }: TableOfContentsProps) {
+  const { t } = useTranslations();
 
   if (items.length === 0) {
     return null;

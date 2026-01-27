@@ -1,4 +1,6 @@
-import { getTranslations } from "../../i18n/server";
+"use client";
+
+import { useTranslations } from "../../i18n/client";
 import { formatDate } from "../../lib/blog-utils";
 
 interface PostMetaProps {
@@ -7,8 +9,8 @@ interface PostMetaProps {
   authors: string[];
 }
 
-export async function PostMeta({ date, readingTime, authors }: PostMetaProps) {
-  const { t } = await getTranslations();
+export function PostMeta({ date, readingTime, authors }: PostMetaProps) {
+  const { t } = useTranslations();
 
   return (
     <div className="flex flex-wrap items-center gap-4 text-[var(--color-text-muted)]">

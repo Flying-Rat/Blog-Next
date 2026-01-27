@@ -1,24 +1,18 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useTranslations } from "../../i18n/client";
 import type { Language } from "../../i18n/settings";
 
-interface LanguageToggleProps {
-  currentLabel: string;
-  nextLanguage: Language;
-  ariaLabel: string;
-}
+export function LanguageToggle() {
+  const { t, language, setLanguage } = useTranslations();
+  const nextLanguage: Language = language === "en" ? "cs" : "en";
+  const languageLabels: Record<Language, string> = {
+    en: t("header.languageLabels.en"),
+    cs: t("header.languageLabels.cs"),
+  };
 
-export function LanguageToggle({ currentLabel, nextLanguage, ariaLabel }: LanguageToggleProps) {
-  const router = useRouter();
-
-  const handleToggle = async () => {
-    await fetch("/api/language", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ lng: nextLanguage }),
-    });
-    router.refresh();
+  const handleToggle = () => {
+    setLanguage(nextLanguage);
   };
 
   return (
@@ -26,9 +20,9 @@ export function LanguageToggle({ currentLabel, nextLanguage, ariaLabel }: Langua
       type="button"
       onClick={handleToggle}
       className="inline-flex items-center justify-center h-9 px-3 text-xs font-semibold rounded-lg transition-all duration-300 glass-subtle text-[var(--color-accent)] border border-[var(--color-accent)]/20 hover:border-[var(--color-accent)]/40 hover:shadow-sm hover:shadow-[var(--color-accent)]/10 sm:text-sm"
-      aria-label={ariaLabel}
+      aria-label={t("header.toggleLanguage")}
     >
-      {currentLabel}
+      {languageLabels[language]}
     </button>
   );
 }

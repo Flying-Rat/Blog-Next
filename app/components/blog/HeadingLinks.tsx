@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useTranslations } from "../../i18n/client";
 
 function getHeadingLink(id: string) {
   const url = new URL(window.location.href);
@@ -8,11 +9,10 @@ function getHeadingLink(id: string) {
   return url.toString();
 }
 
-interface HeadingLinksProps {
-  copyLabel: string;
-}
+export function HeadingLinks() {
+  const { t } = useTranslations();
+  const copyLabel = t("post.copyHeadingLink");
 
-export function HeadingLinks({ copyLabel }: HeadingLinksProps) {
   useEffect(() => {
     const headings = Array.from(document.querySelectorAll("article h2, article h3, article h4"));
     const handlers: Array<{ button: HTMLButtonElement; onClick: (event: MouseEvent) => void }> = [];

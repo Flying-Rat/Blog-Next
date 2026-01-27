@@ -1,18 +1,13 @@
+"use client";
+
 import Link from "next/link";
-import { getTranslations } from "../../i18n/server";
-import type { Language } from "../../i18n/settings";
+import { useTranslations } from "../../i18n/client";
 import { BrandLogo } from "./BrandLogo";
 import { LanguageToggle } from "./LanguageToggle";
 import { ThemeToggle } from "./ThemeToggle";
 
-export async function BlogHeader() {
-  const { t, language } = await getTranslations();
-  const languageLabels: Record<Language, string> = {
-    en: t("header.languageLabels.en"),
-    cs: t("header.languageLabels.cs"),
-  };
-  const nextLanguage: Language = language === "en" ? "cs" : "en";
-
+export function BlogHeader() {
+  const { t } = useTranslations();
   const logoAlt = t("brand.logoAlt");
 
   return (
@@ -41,16 +36,8 @@ export async function BlogHeader() {
                 <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1Z" />
               </svg>
             </a>
-            <LanguageToggle
-              currentLabel={languageLabels[language]}
-              nextLanguage={nextLanguage}
-              ariaLabel={t("header.toggleLanguage")}
-            />
-            <ThemeToggle
-              lightLabel={t("header.lightMode")}
-              darkLabel={t("header.darkMode")}
-              ariaLabel={t("header.toggleTheme")}
-            />
+            <LanguageToggle />
+            <ThemeToggle />
           </div>
         </div>
 
@@ -66,16 +53,8 @@ export async function BlogHeader() {
               <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1Z" />
             </svg>
           </a>
-          <LanguageToggle
-            currentLabel={languageLabels[language]}
-            nextLanguage={nextLanguage}
-            ariaLabel={t("header.toggleLanguage")}
-          />
-          <ThemeToggle
-            lightLabel={t("header.lightMode")}
-            darkLabel={t("header.darkMode")}
-            ariaLabel={t("header.toggleTheme")}
-          />
+          <LanguageToggle />
+          <ThemeToggle />
         </nav>
       </div>
     </header>

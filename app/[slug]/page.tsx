@@ -7,7 +7,7 @@ import { CopyCodeButton } from "../components/blog/CopyCodeButton";
 import { HeadingLinks } from "../components/blog/HeadingLinks";
 import { PostMeta } from "../components/blog/PostMeta";
 import { TableOfContents } from "../components/blog/TableOfContents";
-import { getTranslations } from "../i18n/server";
+import { I18nText } from "../i18n/client";
 import {
   formatDate,
   getAllFullSlugs,
@@ -59,8 +59,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = getPostByPath(slug);
 
   if (!post) {
-    const { t } = await getTranslations();
-    return { title: t("post.notFound") };
+    return { title: "Post not found" };
   }
 
   const url = `${SITE_URL}/${getFullSlug(post)}`;
@@ -101,7 +100,6 @@ export default async function BlogPostPage({ params }: PageProps) {
     notFound();
   }
 
-  const { t } = await getTranslations();
   const authors = getAuthors(post);
   const relatedPosts = getRelatedPosts(post.slug, 3);
   const allPosts = getAllPosts();
@@ -185,7 +183,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                           <span className="absolute left-0 top-0 h-full w-1 bg-[var(--color-accent)]/60" />
                           <div className="flex items-center justify-between mb-2">
                             <span className="px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] rounded-full bg-[var(--color-accent)]/15 text-[var(--color-accent)]">
-                              {t("post.newerPost")}
+                              <I18nText k="post.newerPost" />
                             </span>
                             <svg
                               className="w-4 h-4 text-[var(--color-accent)]"
@@ -196,7 +194,9 @@ export default async function BlogPostPage({ params }: PageProps) {
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             >
-                              <title>{t("post.newerPost")}</title>
+                              <title>
+                                <I18nText k="post.newerPost" />
+                              </title>
                               <path d="M15 18l-6-6 6-6" />
                             </svg>
                           </div>
@@ -217,7 +217,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                           <span className="absolute right-0 top-0 h-full w-1 bg-[var(--color-accent)]/60" />
                           <div className="flex items-center justify-between mb-2">
                             <span className="px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] rounded-full bg-[var(--color-accent)]/15 text-[var(--color-accent)]">
-                              {t("post.olderPost")}
+                              <I18nText k="post.olderPost" />
                             </span>
                             <svg
                               className="w-4 h-4 text-[var(--color-accent)]"
@@ -228,7 +228,9 @@ export default async function BlogPostPage({ params }: PageProps) {
                               strokeLinecap="round"
                               strokeLinejoin="round"
                             >
-                              <title>{t("post.olderPost")}</title>
+                              <title>
+                                <I18nText k="post.olderPost" />
+                              </title>
                               <path d="M9 6l6 6-6 6" />
                             </svg>
                           </div>
@@ -250,7 +252,9 @@ export default async function BlogPostPage({ params }: PageProps) {
               {relatedPosts.length > 0 && (
                 <section className="mt-12">
                   <div className="flex items-center gap-4 mb-6">
-                    <h2 className="text-xl font-bold">{t("post.relatedPosts")}</h2>
+                    <h2 className="text-xl font-bold">
+                      <I18nText k="post.relatedPosts" />
+                    </h2>
                     <div className="flex-1 h-px bg-gradient-to-r from-[var(--color-border)] to-transparent" />
                   </div>
                   <div className="grid md:grid-cols-3 gap-4 mb-6">
@@ -268,14 +272,18 @@ export default async function BlogPostPage({ params }: PageProps) {
                             {related.excerpt}
                           </p>
                           <div className="mt-4 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--color-accent)]">
-                            <span>{t("post.continueReading")}</span>
+                            <span>
+                              <I18nText k="post.continueReading" />
+                            </span>
                             <svg
                               className="w-4 h-4"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
                             >
-                              <title>{t("post.continueReading")}</title>
+                              <title>
+                                <I18nText k="post.continueReading" />
+                              </title>
                               <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
@@ -299,7 +307,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             )}
           </div>
         </div>
-        <HeadingLinks copyLabel={t("post.copyHeadingLink")} />
+        <HeadingLinks />
       </article>
       <ContactSection />
     </>

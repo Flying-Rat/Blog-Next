@@ -1,9 +1,11 @@
+"use client";
+
 import Image from "next/image";
-import { getTranslations } from "../../i18n/server";
+import { useTranslations } from "../../i18n/client";
 import { MailIcon, socialLinks } from "../icons/SocialIcons";
 
-export async function ContactSection() {
-  const { t } = await getTranslations();
+export function ContactSection() {
+  const { t } = useTranslations();
   const socialLabels: Record<string, string> = {
     github: t("contact.social.github"),
     discord: t("contact.social.discord"),

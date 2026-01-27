@@ -1,8 +1,9 @@
+"use client";
+
 import Link from "next/link";
-import { getTranslations } from "../../i18n/server";
-import { getFullSlug } from "../../lib/blog";
+import { useTranslations } from "../../i18n/client";
 import type { PostMeta } from "../../lib/blog-types";
-import { formatDate, getAuthors } from "../../lib/blog-utils";
+import { formatDate, getAuthors, getFullSlug } from "../../lib/blog-utils";
 import { ContactSection } from "./ContactSection";
 import { HomePostFilter } from "./HomePostFilter";
 
@@ -10,8 +11,8 @@ interface HomePageContentProps {
   posts: PostMeta[];
 }
 
-export async function HomePageContent({ posts }: HomePageContentProps) {
-  const { t } = await getTranslations();
+export function HomePageContent({ posts }: HomePageContentProps) {
+  const { t } = useTranslations();
   const [featuredPost, ...otherPosts] = posts;
 
   return (
@@ -134,17 +135,7 @@ export async function HomePageContent({ posts }: HomePageContentProps) {
             </Link>
           )}
 
-          {otherPosts.length > 0 && (
-            <HomePostFilter
-              posts={otherPosts}
-              title={t("home.moreArticles")}
-              allLabel={t("home.allCategories")}
-              minReadLabel={t("home.minRead")}
-              readArticleLabel={t("home.readArticle")}
-              searchLabel={t("home.searchLabel")}
-              searchPlaceholder={t("home.searchPlaceholder")}
-            />
-          )}
+          {otherPosts.length > 0 && <HomePostFilter posts={otherPosts} />}
 
           {posts.length === 0 && (
             <div className="text-center py-20">

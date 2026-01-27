@@ -5,7 +5,8 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ConsoleEasterEgg } from "./components/blog/ConsoleEasterEgg";
 import { ScrollProgress } from "./components/blog/ScrollProgress";
-import { getTranslations } from "./i18n/server";
+import { I18nProvider } from "./i18n/client";
+import { fallbackLng } from "./i18n/settings";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -62,12 +63,10 @@ export const metadata: Metadata = {
 
 const themeScript = `(function(){var t=localStorage.getItem('theme');document.documentElement.classList.add(t&&t!=='system'?t:matchMedia('(prefers-color-scheme:light)').matches?'light':'dark')})()`;
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { language } = await getTranslations();
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang={language}
+      lang={fallbackLng}
       className={`${inter.variable} ${spaceGrotesk.variable}`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
@@ -77,11 +76,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="bg-[var(--color-bg)] text-[var(--color-text)] antialiased transition-colors">
-        <ScrollProgress />
-        <ConsoleEasterEgg />
-        {children}
-        <Analytics />
-        <SpeedInsights />
+        <I18nProvider>
+          <ScrollProgress />
+          <ConsoleEasterEgg />
+          {children}
+          <Analytics />
+          <SpeedInsights />
+        </I18nProvider>
       </body>
     </html>
   );

@@ -2,13 +2,10 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslations } from "../../i18n/client";
 
-interface ReadingAssistProps {
-  label: string;
-  ariaLabel: string;
-}
-
-export function ReadingAssist({ label, ariaLabel }: ReadingAssistProps) {
+export function ReadingAssist() {
+  const { t } = useTranslations();
   const [showTop, setShowTop] = useState(false);
   const _pathname = usePathname();
 
@@ -78,9 +75,9 @@ export function ReadingAssist({ label, ariaLabel }: ReadingAssistProps) {
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       className="scroll-top-btn fixed bottom-6 right-6 z-50 glass-subtle border border-[var(--color-border)]/40 text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-all duration-300 px-3 py-2 rounded-full text-sm"
-      aria-label={ariaLabel}
+      aria-label={t("post.scrollTopLabel")}
     >
-      {label}
+      {t("post.scrollTop")}
     </button>
   );
 }

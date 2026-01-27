@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { BlogFooter } from "../components/blog/BlogFooter";
 import { BlogHeader } from "../components/blog/BlogHeader";
 import { ReadingAssist } from "../components/blog/ReadingAssist";
-import { getTranslations } from "../i18n/server";
 
 export const metadata: Metadata = {
   title: {
@@ -13,12 +12,10 @@ export const metadata: Metadata = {
     "Game development insights, tutorials, and technical deep-dives from Flying Rat Studio.",
 };
 
-export default async function BlogLayout({ children }: { children: React.ReactNode }) {
-  const { t } = await getTranslations();
-
+export default function BlogLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
-      <ReadingAssist label={t("post.scrollTop")} ariaLabel={t("post.scrollTopLabel")} />
+      <ReadingAssist />
       <BlogHeader />
       <main>{children}</main>
       <BlogFooter />

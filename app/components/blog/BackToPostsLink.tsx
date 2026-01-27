@@ -1,8 +1,10 @@
-import Link from "next/link";
-import { getTranslations } from "../../i18n/server";
+"use client";
 
-export async function BackToPostsLink() {
-  const { t } = await getTranslations();
+import Link from "next/link";
+import { useTranslations } from "../../i18n/client";
+
+export function BackToPostsLink() {
+  const { t } = useTranslations();
 
   return (
     <Link

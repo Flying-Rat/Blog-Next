@@ -3,7 +3,7 @@ import { BackToPostsLink } from "../../components/blog/BackToPostsLink";
 import { BlogFooter } from "../../components/blog/BlogFooter";
 import { BlogHeader } from "../../components/blog/BlogHeader";
 import { ContactSection } from "../../components/blog/ContactSection";
-import { getTranslations } from "../../i18n/server";
+import { I18nText } from "../../i18n/client";
 import { getAllCategories, getAllPosts, getPostsByCategory } from "../../lib/blog";
 import type { PostMeta } from "../../lib/blog-types";
 import { formatDate, getAuthors, getFullSlug } from "../../lib/blog-utils";
@@ -34,8 +34,6 @@ export default async function CategoryPage({ params }: PageProps) {
   const posts = getPostsByCategory(decodedCategory);
   const allPosts = getAllPosts();
   const label = resolveCategoryLabel(allPosts, decodedCategory);
-  const { t } = await getTranslations();
-
   return (
     <div className="min-h-screen flex flex-col">
       <BlogHeader />
@@ -45,17 +43,19 @@ export default async function CategoryPage({ params }: PageProps) {
             <BackToPostsLink />
             <div className="mb-10">
               <p className="text-xs uppercase tracking-[0.35em] text-[var(--color-text-muted)] mb-3">
-                {t("taxonomy.categoryTitle")}
+                <I18nText k="taxonomy.categoryTitle" />
               </p>
               <h1 className="text-3xl md:text-4xl font-bold mb-2">{label}</h1>
               <p className="text-sm text-[var(--color-text-muted)]">
-                {posts.length} {t("taxonomy.postCount")}
+                {posts.length} <I18nText k="taxonomy.postCount" />
               </p>
             </div>
 
             {posts.length === 0 ? (
               <div className="text-center py-16">
-                <p className="text-[var(--color-text-muted)] text-lg">{t("taxonomy.noPosts")}</p>
+                <p className="text-[var(--color-text-muted)] text-lg">
+                  <I18nText k="taxonomy.noPosts" />
+                </p>
               </div>
             ) : (
               <div className="grid md:grid-cols-2 gap-6">
@@ -88,7 +88,7 @@ export default async function CategoryPage({ params }: PageProps) {
                             <time dateTime={post.date}>{formatDate(post.date)}</time>
                             <span className="w-1 h-1 rounded-full bg-[var(--color-text-subtle)]" />
                             <span>
-                              {post.readingTime} {t("home.minRead")}
+                              {post.readingTime} <I18nText k="home.minRead" />
                             </span>
                             {authors.length > 0 && (
                               <span className="hidden sm:inline-flex items-center gap-2">

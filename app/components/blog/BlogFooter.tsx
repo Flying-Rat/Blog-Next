@@ -1,8 +1,10 @@
-import { getTranslations } from "../../i18n/server";
+"use client";
+
+import { useTranslations } from "../../i18n/client";
 import { BrandLogo } from "./BrandLogo";
 
-export async function BlogFooter() {
-  const { t } = await getTranslations();
+export function BlogFooter() {
+  const { t } = useTranslations();
   const year = new Date().getFullYear();
   const logoAlt = t("brand.logoAlt");
 

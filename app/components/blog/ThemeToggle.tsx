@@ -1,22 +1,20 @@
 "use client";
 
 import { useTheme } from "../../hooks/useTheme";
+import { useTranslations } from "../../i18n/client";
 
-interface ThemeToggleProps {
-  lightLabel: string;
-  darkLabel: string;
-  ariaLabel: string;
-}
-
-export function ThemeToggle({ lightLabel, darkLabel, ariaLabel }: ThemeToggleProps) {
+export function ThemeToggle() {
   const { resolvedTheme, toggleTheme, mounted } = useTheme();
+  const { t } = useTranslations();
+  const lightLabel = t("header.lightMode");
+  const darkLabel = t("header.darkMode");
 
   return (
     <button
       type="button"
       onClick={toggleTheme}
       className="p-2 rounded-lg transition-all duration-300 glass-subtle border border-transparent hover:border-[var(--color-border)]/30 text-[var(--color-text-muted)] hover:text-[var(--color-accent)] hover:shadow-sm"
-      aria-label={ariaLabel}
+      aria-label={t("header.toggleTheme")}
     >
       {mounted &&
         (resolvedTheme === "dark" ? (

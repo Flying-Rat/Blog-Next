@@ -1,29 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "../../i18n/client";
 import type { PostMeta } from "../../lib/blog-types";
 import { formatDate, getAuthors, getFullSlug } from "../../lib/blog-utils";
 
 interface HomePostFilterProps {
   posts: PostMeta[];
-  title: string;
-  allLabel: string;
-  minReadLabel: string;
-  readArticleLabel: string;
-  searchLabel: string;
-  searchPlaceholder: string;
 }
 
-export function HomePostFilter({
-  posts,
-  title,
-  allLabel,
-  minReadLabel,
-  readArticleLabel,
-  searchLabel,
-  searchPlaceholder,
-}: HomePostFilterProps) {
+export function HomePostFilter({ posts }: HomePostFilterProps) {
+  const { t } = useTranslations();
+  const title = t("home.moreArticles");
+  const allLabel = t("home.allCategories");
+  const minReadLabel = t("home.minRead");
+  const readArticleLabel = t("home.readArticle");
+  const searchLabel = t("home.searchLabel");
+  const searchPlaceholder = t("home.searchPlaceholder");
   const categories = useMemo(() => {
     const set = new Set<string>();
     for (const post of posts) {
@@ -38,6 +32,10 @@ export function HomePostFilter({
   const [activeCategory, setActiveCategory] = useState(allLabel);
   const [searchQuery, setSearchQuery] = useState("");
   const normalizedQuery = searchQuery.trim().toLowerCase();
+
+  useEffect(() => {
+    setActiveCategory(allLabel);
+  }, [allLabel]);
 
   const filteredPosts = useMemo(() => {
     let result = posts;
@@ -72,7 +70,7 @@ export function HomePostFilter({
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <fieldset aria-label={title} className="min-w-0">
             <legend className="sr-only">{title}</legend>
-            <div className="inline-flex w-full items-center gap-2 rounded-full border border-[var(--color-border)]/40 bg-[var(--color-surface-light)]/60 p-1 glass-subtle overflow-x-auto no-scrollbar sm:w-auto sm:flex-wrap max-w-full">
+            <div className="inline-flex w-full items-center gap-2 rounded-full border border-[var(--color-border)]/40 bg-[var(--color-surface-light)]/60 p-1 glass-subtle overflow-x-auto no-scrollbar sm:w-auto flex-nowrap max-w-full">
               {segments.map((segment) => {
                 const isActive = segment === activeCategory;
                 return (
