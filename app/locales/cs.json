@@ -6,8 +6,9 @@
     "rssFeed": "RSS kanál",
     "toggleLanguage": "Přepnout jazyk",
     "toggleTheme": "Přepnout motiv",
-    "lightMode": "Přepnout na světlý režim",
-    "darkMode": "Přepnout na tmavý režim",
+    "lightMode": "Světlý režim",
+    "darkMode": "Tmavý režim",
+    "systemMode": "Systémový režim",
     "languageLabels": {
       "en": "EN",
       "cs": "CS"

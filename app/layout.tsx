@@ -5,6 +5,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ConsoleEasterEgg } from "./components/blog/ConsoleEasterEgg";
 import { ScrollProgress } from "./components/blog/ScrollProgress";
+import { ThemeProvider } from "./components/ThemeProvider";
 import { I18nProvider } from "./i18n/client";
 import { fallbackLng } from "./i18n/settings";
 
@@ -61,8 +62,6 @@ export const metadata: Metadata = {
   },
 };
 
-const themeScript = `(function(){var t=localStorage.getItem('theme');document.documentElement.classList.add(t&&t!=='system'?t:matchMedia('(prefers-color-scheme:light)').matches?'light':'dark')})()`;
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -71,18 +70,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <head>
-        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: Required for FOUC prevention */}
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
       <body className="bg-[var(--color-bg)] text-[var(--color-text)] antialiased transition-colors">
-        <I18nProvider>
-          <ScrollProgress />
-          <ConsoleEasterEgg />
-          {children}
-          <Analytics />
-          <SpeedInsights />
-        </I18nProvider>
+        <ThemeProvider>
+          <I18nProvider>
+            <ScrollProgress />
+            <ConsoleEasterEgg />
+            {children}
+            <Analytics />
+            <SpeedInsights />
+          </I18nProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

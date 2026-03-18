@@ -23,7 +23,7 @@ export function MailIcon({ className }: IconProps) {
   );
 }
 
-export function GitHubIcon({ className }: IconProps) {
+function GitHubIcon({ className }: IconProps) {
   return (
     <svg
       className={className}
@@ -37,7 +37,7 @@ export function GitHubIcon({ className }: IconProps) {
   );
 }
 
-export function DiscordIcon({ className }: IconProps) {
+function DiscordIcon({ className }: IconProps) {
   return (
     <svg
       className={className}
@@ -51,7 +51,7 @@ export function DiscordIcon({ className }: IconProps) {
   );
 }
 
-export function XIcon({ className }: IconProps) {
+function XIcon({ className }: IconProps) {
   return (
     <svg
       className={className}
@@ -65,7 +65,7 @@ export function XIcon({ className }: IconProps) {
   );
 }
 
-export function YouTubeIcon({ className }: IconProps) {
+function YouTubeIcon({ className }: IconProps) {
   return (
     <svg
       className={className}

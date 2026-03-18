@@ -11,7 +11,6 @@ import { unified } from "unified";
 import type { Post, PostFrontmatter, PostMeta, TocItem } from "./blog-types";
 import { calculateReadingTime } from "./blog-utils";
 
-export type { Post, PostFrontmatter, PostMeta } from "./blog-types";
 export { formatDate, getAuthors, getFullSlug } from "./blog-utils";
 
 import { getFullSlug } from "./blog-utils";
@@ -147,10 +146,6 @@ function extractExcerpt(content: string, maxLength = 200): string {
   return text;
 }
 
-export function getAllPostSlugs(): string[] {
-  return getAllFilenames().map(filenameToSlug);
-}
-
 function extractIdFromPath(path: string): string | null {
   const match = path.match(/-([a-z0-9]{8})$/i);
   return match ? match[1] : null;
@@ -230,7 +225,7 @@ const getPostBySlugCached = cache((slug: string): Post | null => {
   };
 });
 
-export function getPostBySlug(slug: string): Post | null {
+function getPostBySlug(slug: string): Post | null {
   return getPostBySlugCached(slug);
 }
 

@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useSyncExternalStore,
+} from "react";
 import cs from "../locales/cs.json";
 import en from "../locales/en.json";
 import { fallbackLng, type Language, languages } from "./settings";
@@ -21,7 +28,7 @@ function resolveTranslation(dictionary: typeof en, key: string): string {
   return typeof value === "string" ? value : key;
 }
 
-function readStoredLanguage(): Language {
+function getLanguageSnapshot(): Language {
   if (typeof window === "undefined") {
     return fallbackLng;
   }
@@ -30,6 +37,28 @@ function readStoredLanguage(): Language {
     return stored as Language;
   }
   return fallbackLng;
+}
+
+let languageListeners: Array<() => void> = [];
+
+function subscribeToLanguage(callback: () => void) {
+  languageListeners.push(callback);
+  const handleStorage = (e: StorageEvent) => {
+    if (e.key === STORAGE_KEY) {
+      callback();
+    }
+  };
+  window.addEventListener("storage", handleStorage);
+  return () => {
+    languageListeners = languageListeners.filter((l) => l !== callback);
+    window.removeEventListener("storage", handleStorage);
+  };
+}
+
+function notifyLanguageListeners() {
+  for (const l of languageListeners) {
+    l();
+  }
 }
 
 type I18nContextValue = {
@@ -41,14 +70,11 @@ type I18nContextValue = {
 const I18nContext = createContext<I18nContextValue | null>(null);
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(fallbackLng);
-
-  useEffect(() => {
-    const initial = readStoredLanguage();
-    if (initial !== language) {
-      setLanguageState(initial);
-    }
-  }, [language]);
+  const language = useSyncExternalStore(
+    subscribeToLanguage,
+    getLanguageSnapshot,
+    () => fallbackLng,
+  ) as Language;
 
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -56,14 +82,17 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
     }
   }, [language]);
 
-  const dictionary = useMemo(() => dictionaries[language] ?? dictionaries[fallbackLng], [language]);
+  const dictionary = useMemo(
+    () => dictionaries[language as keyof typeof dictionaries] ?? dictionaries[fallbackLng],
+    [language],
+  );
 
   const t = useCallback((key: string) => resolveTranslation(dictionary, key), [dictionary]);
 
   const setLanguage = useCallback((next: Language) => {
-    setLanguageState(next);
     if (typeof window !== "undefined") {
       window.localStorage.setItem(STORAGE_KEY, next);
+      notifyLanguageListeners();
     }
   }, []);
 

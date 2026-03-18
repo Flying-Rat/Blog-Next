@@ -12,7 +12,7 @@ interface HomePageContentProps {
 }
 
 export function HomePageContent({ posts }: HomePageContentProps) {
-  const { t } = useTranslations();
+  const { t, language } = useTranslations();
   const [featuredPost, ...otherPosts] = posts;
 
   return (
@@ -135,7 +135,7 @@ export function HomePageContent({ posts }: HomePageContentProps) {
             </Link>
           )}
 
-          {otherPosts.length > 0 && <HomePostFilter posts={otherPosts} />}
+          {otherPosts.length > 0 && <HomePostFilter key={language} posts={otherPosts} />}
 
           {posts.length === 0 && (
             <div className="text-center py-20">

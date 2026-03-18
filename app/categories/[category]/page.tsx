@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { BackToPostsLink } from "../../components/blog/BackToPostsLink";
 import { BlogFooter } from "../../components/blog/BlogFooter";
@@ -22,6 +23,18 @@ function resolveCategoryLabel(posts: PostMeta[], category: string): string {
     }
   }
   return category;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { category } = await params;
+  const decoded = decodeURIComponent(category);
+  const posts = getPostsByCategory(decoded);
+  const allPosts = getAllPosts();
+  const label = resolveCategoryLabel(allPosts, decoded);
+  return {
+    title: `${label} | Flying Rat Tech Blog`,
+    description: `${posts.length} posts in ${label}. Game development insights from Flying Rat Studio.`,
+  };
 }
 
 export async function generateStaticParams() {

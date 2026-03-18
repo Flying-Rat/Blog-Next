@@ -6,8 +6,9 @@
     "rssFeed": "RSS feed",
     "toggleLanguage": "Toggle language",
     "toggleTheme": "Toggle theme",
-    "lightMode": "Switch to light mode",
-    "darkMode": "Switch to dark mode",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode",
+    "systemMode": "System mode",
     "languageLabels": {
       "en": "EN",
       "cs": "CS"

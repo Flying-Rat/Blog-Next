@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslations } from "../../i18n/client";
 import type { PostMeta } from "../../lib/blog-types";
 import { formatDate, getAuthors, getFullSlug } from "../../lib/blog-utils";
@@ -32,10 +32,6 @@ export function HomePostFilter({ posts }: HomePostFilterProps) {
   const [activeCategory, setActiveCategory] = useState(allLabel);
   const [searchQuery, setSearchQuery] = useState("");
   const normalizedQuery = searchQuery.trim().toLowerCase();
-
-  useEffect(() => {
-    setActiveCategory(allLabel);
-  }, [allLabel]);
 
   const filteredPosts = useMemo(() => {
     let result = posts;

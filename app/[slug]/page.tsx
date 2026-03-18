@@ -1,3 +1,4 @@
+import parse from "html-react-parser";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -156,9 +157,9 @@ export default async function BlogPostPage({ params }: PageProps) {
                   prose-table:text-sm prose-table:text-[var(--color-text)]
                   prose-th:bg-[var(--color-surface-light)] prose-th:px-4 prose-th:py-2 prose-th:text-[var(--color-text)]
                   prose-td:px-4 prose-td:py-2 prose-td:border-[var(--color-border)] prose-td:text-[var(--color-text)]"
-                // biome-ignore lint/security/noDangerouslySetInnerHtml: Required for markdown rendering
-                dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-              />
+              >
+                {parse(post.contentHtml)}
+              </div>
 
               {post.tags && post.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-8">
