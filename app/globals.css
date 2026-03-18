@@ -73,6 +73,39 @@ html.dark {
   --color-border-hover: rgba(255, 255, 255, 0.1);
 }
 
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-lighter);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--color-text) 0%,
+    var(--color-accent) 50%,
+    var(--color-text) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass {
+  background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--color-border);
+}
+
 html.light {
   --color-bg: #fafafa;
   --color-surface: #ffffff;
@@ -307,19 +340,6 @@ html.crt-mode .scroll-progress-bar {
   width: 8px;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--color-surface);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-surface-lighter);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent);
-}
-
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -336,26 +356,6 @@ html.crt-mode .scroll-progress-bar {
   100% {
     background-position: 200% 0;
   }
-}
-
-.gradient-text {
-  background: linear-gradient(
-    135deg,
-    var(--color-text) 0%,
-    var(--color-accent) 50%,
-    var(--color-text) 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.glass {
-  background: color-mix(in srgb, var(--color-bg) 85%, transparent);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid var(--color-border);
 }
 
 .glass-card {
